@@ -21,6 +21,14 @@
 			.reveal h6 {
 				text-transform: none;
 			}
+
+			.reveal pre code {
+				padding: 15px;
+			}
+
+			.reveal .slide-background {
+				background: #ddd;
+			}
 		</style>
 
 		<!-- Printing and PDF exports -->
@@ -132,23 +140,63 @@
 						```javascript
 						var oldFunc = function(v) {}
 						
-						const fun1 = () => { }	// no param
-						const fun2 = v => v * 2 // one param, one expression
-						const sum = (a, b) => a + b	// several params
-						const func2 = (v1, v2) => { 
-							v3 = 1				// more than one statement
+						const fun1 = () => {}       // no param
+						const fun2 = (v1, v2) => {} // several params
+						const fun3 = v => {}        // one param
+						const fun4 = (a,b) => a + b // only a expression 
+						const fun5 = (v1, v2) => { 
+							v3 = 1                  // several statements
 							return v1 + v2 + v3
 						}
-						const func3 = v => ({name: 'leo'})	// when return obj
+						const func6 = () => ({name: 'leo'}) // return an obj
 						```
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## arrow functions: special
+						## arrow functions: 
+						#### tradional functions have a dynamic this
+						#### while arrow functions have a lexical this
 						```javascript
-						
+						function Person() {
+							this.age = 0
+
+							setInterval(function() {
+								this.age++
+							}, 1000)
+						}
+						var p = new Person()
 						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## arrow functions: this
+						```javascript
+						function Person() {
+							var that = this
+							this.age = 0
+							setInterval(function() {that.age++}, 1000)
+						}
+						function Person() {
+							this.age = 0
+							setInterval(function() {this.age++}.bind(this), 1000)
+						}
+						// arrow functions do not have its own this
+						function Person() {
+							this.age = 0
+							setInterval(() => {this.age++}, 1000)
+						}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## arrow functions: how to use
+						```javascript
+						```
+						advice: 1.shorter functions 2. no existence of this keyword
+						avoid:1.call,apply 2.arguments 3.method function 4.new 5.prtotype 6.yield
 					</script>
 				</section>
 				<section>
