@@ -7,7 +7,7 @@
 		<title>es6 核心特性</title>
 
 		<link rel="stylesheet" href="../../css/reveal.css">
-		<link rel="stylesheet" href="../../css/theme/black.css">
+		<link rel="stylesheet" href="../../css/theme/serif.css">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="../../lib/css/zenburn.css">
@@ -29,6 +29,10 @@
 			.reveal .slide-background {
 				background: #ddd;
 			}
+
+			.reveal section img {
+				border: none;
+			}
 		</style>
 
 		<!-- Printing and PDF exports -->
@@ -49,7 +53,7 @@
 				</section>
 				<section>
 					<h2>structure preview</h2>
-					<img width="870" height="500" data-src="core-feature.jpg">
+					<img width="880" height="552" src="core-feature.jpg">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -226,6 +230,7 @@
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				backgroundTransition: 'convex',
 				dependencies: [
 					{ src: '../../plugin/markdown/marked.js' },
 					{ src: '../../plugin/markdown/markdown.js' },
