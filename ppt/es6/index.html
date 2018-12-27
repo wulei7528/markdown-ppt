@@ -52,83 +52,84 @@
 					<p>wulei6@xiaomi.com</p>
 				</section>
 				<section>
-					<h2>structure preview</h2>
+					<h3>structure preview</h3>
 					<img width="880" height="552" src="core-feature.jpg">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## let & const: block-scoped
+						### let & const: block-scoped
+						#### *VS* var: function-scoped
 						```javascript
 						let x = 1
-						function getNum() {
+						let y = 1
+						function func() {
 							if(false) {
-								var x = Math.random()
-								//let x = Math.random()
-								return x
+								var x = 2	//scope: whole function
+								let y = 2	//scope: block
 							}
 
-							return x
+							console.log(`x=${x}`)
+							console.log(`y=${y}`)
 						}
-						getNum()
+						func()
 						```
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## let & const: block-scoped
 						```javascript
 						for(var i = 0; i < 5; i++) {
-							setTimeout(function() {
-								console.log(i)
-							})
+							setTimeout(function() { console.log(i) })
+						}
+
+						for(var i = 0; i < 5; i++) {
+							(function(i){
+								setTimeout(function() {
+									console.log(i)
+								})
+							})(i)
 						}
 
 						for(let i = 0; i < 5; i++) {
-							setTimeout(function() {
-								console.log(i)
-							})
+							setTimeout(function() { console.log(i) })
 						}
 						```
 					</script>
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## let & const: TDZ
-						```javascript
-						{
-							// TDZ start
-							console.log(a)
-
-							let a = 1	// TDZ end
-						}
-						```
-					</script>
+				<section>
+					<h3>Ways of declaring variables</h3>
+					<img width="873" height="331" src="var-declare.png">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## let & const: how to use
+						### let & const: best practice
 						```javascript
 						{
-							const immutableVar = 123
-							const immutableObj = {
+							const number = 123
+							const object = {
 								a: 1
 							}
+							let modifyFlag = true
+							
+							modifyFlag = false
 
 							for(let i = 0; i < 5; i++) {}
 						}
 						```
 
-						advice: const > let > var(avoid var)
+						advice: prefer const, otherwise let, avoid var
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## template literals
+						### template literals
 						```javascript
 						const name = 'leo'
-						console.log(`My name is ${name}`)
 
-						const mix = `I'm a "teacher" named ${name}`
+						console.log('My name is "' + name + '"')
+
+						console.log(`My name is "${name}"`)
+
 						const html = 
 						`
 							<html>
@@ -140,7 +141,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## arrow functions: syntax
+						### arrow functions: syntax
 						```javascript
 						var oldFunc = function(v) {}
 						
@@ -158,9 +159,8 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## arrow functions: 
-						#### tradional functions have a dynamic this
-						#### while arrow functions have a lexical this
+						### arrow functions *vs*
+						#### tradional functions
 						```javascript
 						function Person() {
 							this.age = 0
@@ -169,49 +169,134 @@
 								this.age++
 							}, 1000)
 						}
-						var p = new Person()
-						```
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## arrow functions: this
-						```javascript
+						// solve 1
 						function Person() {
 							var that = this
 							this.age = 0
-							setInterval(function() {that.age++}, 1000)
-						}
-						function Person() {
-							this.age = 0
-							setInterval(function() {this.age++}.bind(this), 1000)
-						}
-						// arrow functions do not have its own this
-						function Person() {
-							this.age = 0
-							setInterval(() => {this.age++}, 1000)
+							setInterval(function() {
+								that.age++
+							}, 1000)
 						}
 						```
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						## arrow functions: how to use
 						```javascript
+						// solve 2
+						function Person() {
+							this.age = 0
+							setInterval(function() {
+								this.age++
+							}.bind(this), 1000)
+						}
+						// solve 3:arrow functions do not have its own this
+						function Person() {
+							this.age = 0
+							setInterval(() => {
+								this.age++
+							}, 1000)
+						}
 						```
-						advice: 1.shorter functions 2. no existence of this keyword
-						avoid:1.call,apply 2.arguments 3.method function 4.new 5.prtotype 6.yield
 					</script>
 				</section>
 				<section>
-					<h2>proxy</h2>
-					<p>=></p>
+					<h3>arrow functions:best practice</h3>
+					<img width="824" height="174" src="arrow.png">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### destructuring: syntax
+						```javascript
+						const obj = { first: '1', second: '2' }
+
+						const ff = obj.first
+						
+						const { first: f, second: s } = obj
+						const { first, second } = obj
+
+						const arr = ['a', 'b']
+						const [x, y] = arr
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### destructuring: advanced
+						```javascript
+						const obj = { first: '1', second: '2', forth: '4' }
+						const { third: t = '3' } = obj
+
+						const [a, b] = 'hello'
+						const { length: len } = '123'
+
+						const { second, ...rest } = obj
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### destructuring: best practice
+						```javascript
+						function func() {
+							return [1, 2, 3]
+						}
+
+						const [a, b, c] = func()
+
+						function effect({ payload }, { put, call }) {
+							console.log(payload)
+						}
+
+						const { KeyCenter } = require('../')
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### spread operator&rest parameter(...)
+						```javascript
+						Math.max(-1, 5, 2)
+						Math.max(...[-1, 5, 2])
+
+						const arr1 = ['a', 'b']
+						const arr2 = ['c', 'd']
+						arr1.push(...arr2)
+
+						const d = new Date(...[2018, 11, 24])
+
+						const x = ['a', 'b']
+						const y = ['c', 'd']
+						const xy = [...x, ...y]	// concat
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### spread operator&rest parameter(...)
+						```javascript
+						function sum() {
+							let sum = 0
+							for(var i = 0; i　< arguments.length; i++) {
+								sum += arguments[i]
+							}
+							return sum
+						}
+
+						function sum(...args) {
+							let sum = 0
+							for(const arg of args) {
+								sum += arguments[i]
+							}
+							return sum
+						}
+
+						```
+					</script>
 				</section>
 				<section>
-					<h2>promise</h2>
-				</section>
-				<section>
-					<h2>generator</h2>
+					<h3>spread operator&rest parameter(...)</h3>
+					<img width="829" height="269" src="dot.png">
 				</section>
 				<section>
 					<h2>class</h2>
