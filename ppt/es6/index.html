@@ -254,26 +254,27 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### spread operator&rest parameter(...)
+						### spread operator
 						```javascript
 						Math.max(-1, 5, 2)
 						Math.max(...[-1, 5, 2])
 
 						const arr1 = ['a', 'b']
 						const arr2 = ['c', 'd']
-						arr1.push(...arr2)
+						arr1.push(...arr2)      
+						// Array.prototype.push.apply(arr1, arr2)
 
 						const d = new Date(...[2018, 11, 24])
 
 						const x = ['a', 'b']
 						const y = ['c', 'd']
-						const xy = [...x, ...y]	// concat
+						const xy = [...x, ...y]	// const xy = x.concat(y)
 						```
 					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### spread operator&rest parameter(...)
+						### rest parameter
 						```javascript
 						function sum() {
 							let sum = 0
@@ -295,14 +296,115 @@
 					</script>
 				</section>
 				<section>
-					<h3>spread operator&rest parameter(...)</h3>
-					<img width="829" height="269" src="dot.png">
+					<h3>spread operator VS rest parameter</h3>
+					<img width="824" height="342" src="dot.png">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### for...of
+						```javascript
+						var arr = [1, 2, 3]
+						for (var i = 0; i < arr.length; i++) { //can break
+							console.log(arr[i])
+						}
+
+						arr.forEach(function(item) {           //conciseness
+							console.log(item)
+						})
+
+						for(const item of arr) {   //can break & conciseness
+							console.log(item)
+						}
+						for(const [index, item] of arr.entries()) {
+							console.log(`${index}-${item}`)
+						}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### class
+						```javascript
+						function OldClass(name) {
+							this.name = name
+						}
+						OldClass.prototype.getName = function() {
+							return this.name
+						}
+
+						class NewClass {
+							constructor(name) {
+								this.name = name
+							}
+							getName() {
+								return this.name
+							}
+						}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### class: problem with this
+						```javascript
+						class ReactComponent {
+							constructor() {
+								this.name = '123'
+							}
+
+							handlerClick() {
+								console.log(this.name)
+							}
+
+							render() {
+								const dom = document.createElement('div')
+								dom.onclick = this.handlerClick
+								dom.click()
+							}
+						}
+
+						new ReactComponent().render()
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### class: problem with this
+						```javascript
+						class ReactComponent {
+							constructor() {
+								this.name = '123'
+							}
+
+							handlerClick = () => {
+								console.log(this.name)
+							}
+							/*
+							handlerClick() {
+								console.log(this.name)
+							}*/
+
+							render() {
+								const dom = document.createElement('div')
+								dom.onclick = this.handlerClick
+								//dom.onclick = this.handlerClick.bind(this)
+								dom.click()
+							}
+						}
+
+						new ReactComponent().render()
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### promise
+						```javascript
+						```
+					</script>
 				</section>
 				<section>
-					<h2>class</h2>
-				</section>
-				<section>
-					<h2>module</h2>
+					<h3>module</h3>
 				</section>
 			</div>
 		</div>
