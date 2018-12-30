@@ -63,7 +63,7 @@
 						let x = 1
 						let y = 1
 						function func() {
-							if(false) {
+							if(true) {
 								var x = 2	//scope: whole function
 								let y = 2	//scope: block
 							}
@@ -159,7 +159,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### arrow functions *vs*
+						### arrow functions *VS*
 						#### tradional functions
 						```javascript
 						function Person() {
@@ -202,7 +202,7 @@
 				</section>
 				<section>
 					<h3>arrow functions:best practice</h3>
-					<img width="824" height="174" src="arrow.png">
+					<img width="824" height="191" src="arrow.png">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -296,7 +296,7 @@
 					</script>
 				</section>
 				<section>
-					<h3>spread operator VS rest parameter</h3>
+					<h3>spread operator <em>VS</em> rest parameter</h3>
 					<img width="824" height="342" src="dot.png">
 				</section>
 				<section data-markdown>
@@ -396,15 +396,44 @@
 						```
 					</script>
 				</section>
+				<section>
+					<h3>promise</h3>
+					<img width="751" height="311" src="promise.png">
+				</section>
 				<section data-markdown>
 					<script type="text/template">
 						### promise
 						```javascript
+
 						```
 					</script>
 				</section>
-				<section>
-					<h3>module</h3>
+				<section data-markdown>
+					<script type="text/template">
+						### module
+						```javascript
+						// multiple exports--util.js
+						export const STATUSMAP = { 0: 'success', 1: 'error' }
+						export function getStatus() {}
+
+						// import util--main.js
+						import { STATUSMAP, getStatus } from './util'
+						import * as util from './util'
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### module
+						```javascript
+						// single exports--util.js
+						const STATUSMAP = { 0: 'success', 1: 'error' }
+						export default function() {}
+
+						// import util--main.js
+						import myFunc from './util'
+						```
+					</script>
 				</section>
 			</div>
 		</div>
