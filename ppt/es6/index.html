@@ -396,15 +396,43 @@
 						```
 					</script>
 				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### promise: syntax
+						```javascript
+						function asyncFunc()
+						{
+							return new Promise((resolve, reject) => {
+								...
+								resolve(result)     // pending->resolved
+								...
+								reject(error)       // pending->rejected
+							})
+						}
+
+						asyncFunc().then(result => {
+							// success
+						}).catch(error => {
+							// failure
+						})
+						```
+					</script>
+				</section>
 				<section>
-					<h3>promise</h3>
-					<img width="751" height="311" src="promise.png">
+					<h3>promise: states</h3>
+					<img width="814" height="319" src="promise.png">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### promise
+						### promise: advanced
 						```javascript
+						Promise.all([promise1, promise2, promise3])
 
+						Promise.race([promise1, promise2, promise3])
+
+						Promise.resolve()
+
+						Promise.reject()
 						```
 					</script>
 				</section>
