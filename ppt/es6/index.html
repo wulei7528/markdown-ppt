@@ -53,12 +53,12 @@
 				</section>
 				<section>
 					<h3>structure preview</h3>
-					<img width="880" height="552" src="core-feature.jpg">
+					<img src="core-feature.png" style="padding: 5px; background: #ffffff">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
 						### let & const: block-scoped
-						#### *VS* var: function-scoped
+						#### replace var: function-scoped
 						```javascript
 						let x = 1
 						let y = 1
@@ -77,6 +77,7 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
+						### let & const: for loop
 						```javascript
 						for(var i = 0; i < 5; i++) {
 							setTimeout(function() { console.log(i) })
@@ -97,8 +98,8 @@
 					</script>
 				</section>
 				<section>
-					<h3>Ways of declaring variables</h3>
-					<img width="873" height="331" src="var-declare.png">
+					<h3>ways of declaring variables</h3>
+					<img src="var-declare.png">
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -109,15 +110,15 @@
 							const object = {
 								a: 1
 							}
+
 							let modifyFlag = true
-							
 							modifyFlag = false
 
 							for(let i = 0; i < 5; i++) {}
 						}
 						```
 
-						advice: prefer const, otherwise let, avoid var
+						advice: prefer const > otherwise let > avoid var
 					</script>
 				</section>
 				<section data-markdown>
@@ -159,8 +160,8 @@
 				</section>
 				<section data-markdown>
 					<script type="text/template">
-						### arrow functions *VS*
-						#### tradional functions
+						### arrow functions: lexical this
+						#### tradional functions: dynamic this
 						```javascript
 						function Person() {
 							this.age = 0
@@ -169,6 +170,7 @@
 								this.age++
 							}, 1000)
 						}
+
 						// solve 1
 						function Person() {
 							var that = this
@@ -177,12 +179,6 @@
 								that.age++
 							}, 1000)
 						}
-						```
-					</script>
-				</section>
-				<section data-markdown>
-					<script type="text/template">
-						```javascript
 						// solve 2
 						function Person() {
 							this.age = 0
@@ -201,8 +197,27 @@
 					</script>
 				</section>
 				<section>
-					<h3>arrow functions:best practice</h3>
-					<img width="824" height="191" src="arrow.png">
+					<h3>arrow functions: lexical variables</h3>
+					<img src="arrow.png">
+				</section>
+				<section>
+					<h3>array:new features</h3>
+					<img src="array.png">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### array: new features
+						```javascript
+						let arraylike = {
+							1: 'a',
+							length: 3
+						}
+						const arr1 = [].slice.call(arraylike)
+						const arr2 = Array.from(arraylike)
+
+						const arr3 = Array.from([1, 2, 3], v => v * 2)
+						```
+					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
@@ -400,17 +415,16 @@
 					<script type="text/template">
 						### promise: syntax
 						```javascript
-						function asyncFunc()
-						{
-							return new Promise((resolve, reject) => {
-								...
+						const promise = new Promise((resolve, reject) => {
+							...
+							if (...) {
 								resolve(result)     // pending->resolved
-								...
+							} else {
 								reject(error)       // pending->rejected
-							})
-						}
-
-						asyncFunc().then(result => {
+							}
+						})
+						
+						promise.then(result => {
 							// success
 						}).catch(error => {
 							// failure
@@ -419,8 +433,48 @@
 					</script>
 				</section>
 				<section>
-					<h3>promise: states</h3>
-					<img width="814" height="319" src="promise.png">
+					<h3>promise: three states</h3>
+					<img width="826" height="355" src="promise.png">
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### promise: best practice
+						```javascript
+						function delay(time) {
+							return new Promise((resolve, reject) => {
+								setTimeout(resolve, time)
+							})
+						}
+
+						function timeout(time, promise) {
+							return new Promise((resolve, reject) => {
+								promise.then(resolve)
+								setTimeout(reject, time)
+							})
+						}
+						```
+					</script>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						### promise: best practice
+						#### reference: [souce code of fetch](https://github.com/github/fetch/blob/master/fetch.js#L441:17)
+						```javascript
+						function fetch(url, options) {
+							return new Promise((resolve, reject) => {
+								var xhr = new XMLHttpRequest()
+
+								xhr.onload = function() {
+									if(this.status === 200) { resolve(this.response) }
+									else { reject(new Error(this.statusText)) }
+								}
+
+								xhr.open(options.method, url, true)
+								xhr.send()
+							})
+						}
+						```
+					</script>
 				</section>
 				<section data-markdown>
 					<script type="text/template">
